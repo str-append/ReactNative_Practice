@@ -8,8 +8,11 @@ import PlaceListScreen from "../Screens/PlaceListScreen"
 import PlaceDetailsScreen from "../Screens/PlaceDetailsScreen"
 import NewPlaceScreen from "../Screens/NewPlaceScreen"
 import MapScreen from "../Screens/MapScreen"
-
+import SplashScreen from "../Screens/SplashScreen";
+import DemoAppScreen from "../Screens/DemoAppScreen";
 const PlacesNavigator =createStackNavigator({
+    Splash : SplashScreen,
+    DemoAppScreen : DemoAppScreen,
     Places: PlaceListScreen,
     PlaceDetail : PlaceDetailsScreen,
     NewPlace : NewPlaceScreen,

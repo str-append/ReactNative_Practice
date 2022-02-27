@@ -1,0 +1,80 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+#default_platform(:android)
+
+# platform :android do
+#   desc "Runs all the tests"
+#   lane :test do
+#     gradle(task: "test")
+#   end
+
+#   desc "Submit a new Beta Build to Crashlytics Beta"
+#   lane :beta do
+#     gradle(task: "clean assembleRelease")
+#     crashlytics
+  
+#     # sh "your_script.sh"
+#     # You can also use other beta testing services here
+#   end
+
+#   desc "Deploy a new version to the Google Play"
+#   lane :deploy do
+#     gradle(task: "clean assembleRelease")
+#     upload_to_play_store
+#   end
+# end
+
+platform :android do
+  desc "Submit a new build"
+  lane :beta do
+     app_identifier = "com.nativaccess.app"
+
+    api_environment = "staging"
+    ENV['FIREBASE_DB'] = "https://demoapp-fd18c-default-rtdb.firebaseio.com/userDataStagingEnv.json"
+    if ENV["IS_PRODUCTION"] == "true"
+      api_environment = "production"
+      ENV['FIREBASE_DB'] = "https://demoapp-fd18c-default-rtdb.firebaseio.com/userDataProductionEnv.json"
+    end
+    ENV["ENVFILE"]=".env.#{api_environment}"
+   
+    puts "API_HOST: #{ENV['FIREBASE_DB']}"
+    puts "IS_PRODUCTION: #{ENV['IS_PRODUCTION']}"
+    puts "ENVFILE: #{ENV['ENVFILE']}"
+    
+    gradle_file = "./android/app/build.gradle"
+  end
+end
+
+platform :ios do
+  desc "Submit a new build to TestFlight"
+  lane :beta do
+    app_identifier = "com.app.nativeaccess"
+
+    api_environment = "staging"
+    ENV['FIREBASE_DB'] = "https://demoapp-fd18c-default-rtdb.firebaseio.com/userDataStagingEnv.json"
+    if ENV["IS_PRODUCTION"] == "true"
+      api_environment = "production"
+      ENV['FIREBASE_DB'] = "https://demoapp-fd18c-default-rtdb.firebaseio.com/userDataProductionEnv.json"
+    end
+    ENV["ENVFILE"]=".env.#{api_environment}"
+
+    ENV["ENVFILE"]=".env.#{api_environment}"
+
+    puts "API_HOST: #{ENV['FIREBASE_DB']}"
+    puts "IS_PRODUCTION: #{ENV['IS_PRODUCTION']}"
+    puts "ENVFILE: #{ENV['ENVFILE']}"
+    end
+  end
